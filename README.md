@@ -10,4 +10,6 @@ No such thing.
 
 Only one can choose an inteded belief of self righteousness. Click carefully. Expect to be betrayed.
 
-Made with React!
+## Made with:
+
+React and Heroku!
