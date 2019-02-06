@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "image": "/assets/images/chaoticEvil.jpeg",
+    "clicked": false
+  },
+  {
+    "id": 2,
+    "image": "/assets/images/chaoticGood.jpeg",
+    "clicked": false
+  },
+  {
+    "id": 3,
+    "image": "/assets/images/chaoticNeutral.jpeg",
+    "clicked": false
+  },
+  {
+    "id": 4,
+    "image": "/assets/images/lawfulEvil.jpeg",
+    "clicked": false
+  },
+  {
+    "id": 5,
+    "image": "/assets/images/lawfulGood.jpeg",
+    "clicked": false
+  },
+  {
+    "id": 6,
+    "image": "/assets/images/lawfulNeutral.jpeg",
+    "clicked": false
+  },
+  {
+    "id": 7,
+    "image": "/assets/images/neutralEvil.jpeg",
+    "clicked": false
+  },
+  {
+    "id": 8,
+    "image": "/assets/images/neutralGood.jpeg",
+    "clicked": false
+  },
+  {
+    "id": 9,
+    "image": "/assets/images/trueNeutral.jpeg",
+    "clicked": false
+  }
+]
