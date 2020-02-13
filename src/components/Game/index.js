@@ -1,91 +1,85 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "../Container";
 import Jumbotron from "../Jumbotron";
 import ClickItem from "../ClickItem";
 import data from "../../data.json";
 
-class Game extends Component {
-  state = {
-    data,
-    score: 0,
-    topScore: 0
-  };
+function Game() {
+	const [score, setScore] = useState(0);
+	const [topScore, setTopScore] = useState(0);
 
-  componentDidMount() {
-    this.setState({ data: this.shuffleData(this.state.data) });
-  }
+	// componentDidMount() {
+	//   setState({ data: shuffleData(data) });
+	// }
 
-  handleCorrectGuess = newData => {
-    const { topScore, score } = this.state;
-    const newScore = score + 1;
-    const newTopScore = Math.max(newScore, topScore);
+	useEffect(() => {
+		shuffleData(data);
+	}, []);
 
-    this.setState({
-      data: this.shuffleData(newData),
-      score: newScore,
-      topScore: newTopScore
-    });
-  };
+	const handleCorrectGuess = newData => {
+		const newScore = score + 1;
+		const newTopScore = Math.max(newScore, topScore);
 
-  handleIncorrectGuess = data => {
-    this.setState({
-      data: this.resetData(data),
-      score: 0
-    });
-  };
+		shuffleData(newData);
+		setScore(newScore);
+		setTopScore(newTopScore);
+	};
 
-  resetData = data => {
-    const resetData = data.map(item => ({ ...item, clicked: false }));
-    return this.shuffleData(resetData);
-  };
+	const handleIncorrectGuess = data => {
+		resetData(data);
+		setScore(0);
+	};
 
-  shuffleData = data => {
-    let i = data.length - 1;
-    while (i > 0) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = data[i];
-      data[i] = data[j];
-      data[j] = temp;
-      i--;
-    }
-    return data;
-  };
+	const resetData = data => {
+		const resetData = data.map(item => ({ ...item, clicked: false }));
+		return shuffleData(resetData);
+	};
 
-  handleItemClick = id => {
-    let guessedCorrectly = false;
-    const newData = this.state.data.map(item => {
-      const newItem = { ...item };
-      if (newItem.id === id) {
-        if (!newItem.clicked) {
-          newItem.clicked = true;
-          guessedCorrectly = true;
-        }
-      }
-      return newItem;
-    });
-    guessedCorrectly
-      ? this.handleCorrectGuess(newData)
-      : this.handleIncorrectGuess(newData);
-  };
+	const shuffleData = data => {
+		let i = data.length - 1;
+		while (i > 0) {
+			const j = Math.floor(Math.random() * (i + 1));
+			const temp = data[i];
+			data[i] = data[j];
+			data[j] = temp;
+			i--;
+		}
+		return data;
+	};
 
-  render() {
-    return (
-      <div>
-        <Jumbotron />
-        <Container>
-          {this.state.data.map(item => (
-            <ClickItem
-              key={item.id}
-              id={item.id}
-              shake={!this.state.score && this.state.topScore}
-              handleClick={this.handleItemClick}
-              image={item.image}
-            />
-          ))}
-        </Container>
-      </div>
-    );
-  }
+	const handleItemClick = id => {
+		let guessedCorrectly = false;
+		const newData = data.map(item => {
+			const newItem = { ...item };
+			if (newItem.id === id) {
+				if (!newItem.clicked) {
+					newItem.clicked = true;
+					guessedCorrectly = true;
+				}
+			}
+			return newItem;
+		});
+		guessedCorrectly
+			? handleCorrectGuess(newData)
+			: handleIncorrectGuess(newData);
+	};
+
+	return (
+		<div>
+			<Jumbotron />
+			<Container>
+				{data.map(item => (
+					<ClickItem
+						key={item.id}
+						id={item.id}
+						shake={!score && topScore}
+						handleClick={handleItemClick}
+						image={item.image}
+					/>
+				))}
+			</Container>
+		</div>
+	);
 }
 
 export default Game;
